@@ -6,7 +6,7 @@
 
 use bevy::math::Vec2;
 use lyon_tessellation::{
-    math::{point, Angle, Point, Rect, Size, Vector},
+    math::{point, Angle, Box2D, Point, Size, Vector},
     path::{
         builder::WithSvg,
         path::Builder,
@@ -69,7 +69,7 @@ impl Geometry for Rectangle {
         };
 
         b.add_rectangle(
-            &Rect::new(origin, Size::new(self.extents.x, self.extents.y)),
+            &Box2D::new(origin, Point::new(self.extents.x, self.extents.y)),
             Winding::Positive,
         );
     }
@@ -434,6 +434,6 @@ impl Geometry for SvgPathShape {
             }
         }
         let path = svg_builder.build();
-        b.concatenate(&[path.as_slice()]);
+        b.extend_from_paths(&[path.as_slice()]);
     }
 }

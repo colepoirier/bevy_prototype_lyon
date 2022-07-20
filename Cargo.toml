@@ -18,17 +18,17 @@ bevy = { path = "/home/colepoirier/building/try_patch_bevy", default-features = 
     "bevy_render",
     "bevy_core_pipeline",
 ] }
-lyon_tessellation = "0.17"
+lyon_tessellation = "1.0.1"
 svgtypes = "0.5"
 
-# [profile.dev.package.layout21]
-# opt-level = 3
-
-# [profile.dev.package."*"]
-# opt-level = 1
-
-[profile.dev]
+[profile.dev.package.layout21]
 opt-level = 3
+
+[profile.dev.package."*"]
+opt-level = 1
+
+# [profile.dev]
+# opt-level = 3
 
 [dev-dependencies]
 bevy = { path = "/home/colepoirier/building/try_patch_bevy", default-features = false, features = [
