@@ -13,7 +13,7 @@ version = "0.5.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { path = "/home/colepoirier/building/try_patch_bevy", default-features = false, features = [
+bevy = { git = "https://github.com/bevyengine/bevy", rev = "4b1f6f4ebba92fc968124380d5a19e1d2500e2dd", default-features = false, features = [
     "bevy_sprite",
     "bevy_render",
     "bevy_core_pipeline",
@@ -31,7 +31,7 @@ opt-level = 1
 # opt-level = 3
 
 [dev-dependencies]
-bevy = { path = "/home/colepoirier/building/try_patch_bevy", default-features = false, features = [
+bevy = { git = "https://github.com/bevyengine/bevy", rev = "4b1f6f4ebba92fc968124380d5a19e1d2500e2dd", default-features = false, features = [
     "x11",
 ] }
 crossbeam-channel = "0.5.5"
