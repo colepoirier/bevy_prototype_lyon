@@ -6,12 +6,10 @@
 
 use bevy::math::Vec2;
 use lyon_tessellation::{
-    math::{point, Angle, Box2D, Point, Size, Vector},
+    math::{point, Angle, Box2D, Point, Vector},
     path::{
-        builder::WithSvg,
-        path::Builder,
-        traits::{PathBuilder, SvgPathBuilder},
-        ArcFlags, Polygon as LyonPolygon, Winding,
+        builder::WithSvg, path::Builder, traits::SvgPathBuilder, ArcFlags, Polygon as LyonPolygon,
+        Winding,
     },
 };
 use svgtypes::{Path, PathSegment};
