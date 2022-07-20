@@ -1,5 +1,3 @@
-use std::io::Write;
-
 use bevy::{
     prelude::*,
     render::{
@@ -13,11 +11,11 @@ use bevy::{
     tasks::{AsyncComputeTaskPool, Task},
     utils::hashbrown::HashMap,
 };
-use bevy_prototype_lyon::{entity::ShapeBundle, prelude::*};
+use bevy_prototype_lyon::prelude::*;
 use crossbeam_channel::{bounded, Receiver, Sender};
 use futures_lite::future;
 use geo::Intersects;
-use layout21::raw::{self, proto::ProtoImporter, utils::Ptr, BoundBox, BoundBoxTrait, Library};
+use layout21::raw::{self, proto::ProtoImporter, BoundBox, BoundBoxTrait, Library};
 
 pub type GeoRect = geo::Rect<i64>;
 pub type GeoPolygon = geo::Polygon<i64>;
@@ -304,7 +302,7 @@ fn load_lib_system(
 
         let t = std::time::Instant::now();
 
-        let lib_layers = &**lib_layers;
+        // let lib_layers = &**lib_layers;
 
         import_cell_shapes(
             tilemap_shift,
@@ -312,8 +310,8 @@ fn load_lib_system(
             &mut tilemap,
             &flattened_elems,
             &mut shape_count,
-            &lib_layers,
-            &layers,
+            // &lib_layers,
+            // &layers,
         );
 
         info!("DONE {shape_count} shapes in {:?}!", t.elapsed());
@@ -430,24 +428,15 @@ pub fn import_cell_shapes(
     // cell: &Ptr<raw::Cell>,
     elems: &Vec<raw::Element>,
     shape_count: &mut u64,
-    lib_layers: &raw::Layers,
-    layers: &HashMap<u8, Color>,
+    // lib_layers: &raw::Layers,
+    // layers: &HashMap<u8, Color>,
 ) {
     // let read_cell = cell.read().unwrap();
     // let read_lib_layers = lib_layers.read().unwrap();
 
     // let layout = read_cell.layout.as_ref().unwrap();
 
-    for (
-        idx,
-        raw::Element {
-            net: _,
-            layer,
-            inner,
-            ..
-        },
-    ) in elems.iter().enumerate()
-    {
+    for (idx, raw::Element { inner, .. }) in elems.iter().enumerate() {
         // continue;
         // let layer = lib_layers
         //     .get(*layer)
@@ -740,6 +729,12 @@ fn spawn_system(
             ..default()
         };
 
+        // let half_size = Extent3d {
+        //     width: 2048,
+        //     height: 2048,
+        //     ..default()
+        // };
+
         // This is the texture that will be rendered to.
         let mut image = Image {
             texture_descriptor: TextureDescriptor {
@@ -756,10 +751,28 @@ fn spawn_system(
             ..default()
         };
 
+        // The intermediate, downsized texture that will be rendered to
+        // let mut halfsized_image = Image {
+        //     texture_descriptor: TextureDescriptor {
+        //         label: None,
+        //         size,
+        //         dimension: TextureDimension::D2,
+        //         format: TextureFormat::Bgra8UnormSrgb,
+        //         mip_level_count: 1,
+        //         sample_count: 1,
+        //         usage: TextureUsages::TEXTURE_BINDING
+        //             | TextureUsages::COPY_DST
+        //             | TextureUsages::RENDER_ATTACHMENT,
+        //     },
+        //     ..default()
+        // };
+
         // fill image.data with zeroes
         image.resize(size);
+        // halfsized_image.resize(half_size);
 
         let image_handle = images.add(image);
+        // let halfsized_image_handle = images.add(halfsized_image);
 
         // This specifies the layer used for the first pass, which will be attached to
         // the first pass camera and cube.
@@ -798,7 +811,7 @@ fn spawn_system(
                     closed: true,
                 };
 
-                info!("{lyon_poly:?}");
+                // info!("{lyon_poly:?}");
 
                 let transform = Transform::from_translation(Vec3::new(0.0, 0.0, layer as f32));
 
@@ -826,6 +839,7 @@ fn spawn_system(
 
                 commands
                     .spawn_bundle(lyon_shape)
+                    .insert_bundle(VisibilityBundle::default())
                     .insert(LyonShape)
                     .insert(first_pass_layer);
             }
@@ -998,7 +1012,7 @@ fn despawn_system(
             commands.entity(cam).despawn();
         }
         for s in shape_q.iter() {
-            info!("despawn shape");
+            // info!("despawn shape");
             commands.entity(s).despawn();
         }
     }
