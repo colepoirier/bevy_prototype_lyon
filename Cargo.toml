@@ -13,7 +13,7 @@ version = "0.5.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { git = "https://github.com/kserz/bevy", branch = "sprite_layers", default-features = false, features = [
+bevy = { path = "/home/colepoirier/building/try_patch_bevy", default-features = false, features = [
     "bevy_sprite",
     "bevy_render",
     "bevy_core_pipeline",
@@ -21,7 +21,22 @@ bevy = { git = "https://github.com/kserz/bevy", branch = "sprite_layers", defaul
 lyon_tessellation = "0.17"
 svgtypes = "0.5"
 
+# [profile.dev.package.layout21]
+# opt-level = 3
+
+# [profile.dev.package."*"]
+# opt-level = 1
+
+[profile.dev]
+opt-level = 3
+
 [dev-dependencies]
-bevy = { git = "https://github.com/kserz/bevy", branch = "sprite_layers", default-features = false, features = [
+bevy = { path = "/home/colepoirier/building/try_patch_bevy", default-features = false, features = [
     "x11",
 ] }
+crossbeam-channel = "0.5.5"
+futures-lite = "1.12.0"
+vlsir = "1.0.0"
+layout21 = { git = "https://github.com/colepoirier/Layout21" }
+geo = "0.22.1"
+csv = "1.1.6"

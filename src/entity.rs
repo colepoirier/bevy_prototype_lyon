@@ -19,7 +19,7 @@ use crate::{
 
 /// A Bevy `Bundle` to represent a shape.
 #[allow(missing_docs)]
-#[derive(Bundle)]
+#[derive(Bundle, Clone)]
 pub struct ShapeBundle {
     pub path: Path,
     pub mode: DrawMode,
@@ -50,7 +50,7 @@ impl Default for ShapeBundle {
 }
 
 #[allow(missing_docs)]
-#[derive(Component)]
+#[derive(Component, Clone)]
 pub struct Path(pub tess::path::Path);
 
 impl Geometry for Path {

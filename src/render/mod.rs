@@ -34,7 +34,7 @@ use bevy::{
 };
 
 /// A marker component for colored 2d meshes
-#[derive(Component, Default)]
+#[derive(Component, Default, Clone, Copy)]
 pub struct Shape;
 
 /// Custom pipeline for 2d meshes with vertex colors
@@ -84,11 +84,11 @@ impl SpecializedRenderPipeline for ShapePipeline {
                 shader: SHAPE_SHADER_HANDLE.typed::<Shader>(),
                 shader_defs: Vec::new(),
                 entry_point: "fragment".into(),
-                targets: vec![ColorTargetState {
+                targets: vec![Some(ColorTargetState {
                     format: TextureFormat::bevy_default(),
                     blend: Some(BlendState::ALPHA_BLENDING),
                     write_mask: ColorWrites::ALL,
-                }],
+                })],
             }),
             // Use the two standard uniforms for 2d meshes
             layout: Some(vec![
