@@ -27,7 +27,7 @@ fn setup_system(mut commands: Commands) {
         .spawn()
         .insert(Name("Blacksmith".to_owned()))
         .insert(BlacksmithMarker)
-        .insert_bundle(SpatialBundle {
+        .insert(SpatialBundle {
             transform: Transform::from_translation(Vec3::new(-50., 0., 0.)),
             ..default()
         })
@@ -59,7 +59,7 @@ fn setup_system(mut commands: Commands) {
         .spawn()
         .insert(Name("Shack".to_owned()))
         .insert(ToolShackMarker)
-        .insert_bundle(SpatialBundle {
+        .insert(SpatialBundle {
             transform: Transform {
                 translation: Vec3::new(375., 0., 0.),
                 scale: Vec3::new(0.1, 0.1, 1.),
