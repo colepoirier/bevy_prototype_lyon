@@ -21,10 +21,10 @@ struct BlacksmithMarker;
 struct ToolShackMarker;
 
 fn setup_system(mut commands: Commands) {
-    commands.spawn_bundle(Camera2dBundle::default());
+    commands.spawn(Camera2dBundle::default());
 
     commands
-        .spawn()
+        .spawn_empty()
         .insert(Name("Blacksmith".to_owned()))
         .insert(BlacksmithMarker)
         .insert(SpatialBundle {
@@ -37,7 +37,7 @@ fn setup_system(mut commands: Commands) {
         //the art style was approximated from https://www.kenney.nl/assets/cartography-pack
         .with_children(|parent| {
             let svg_doc_size = Vec2::new(512., 512.);
-            parent.spawn_bundle(GeometryBuilder::build_as(
+            parent.spawn(GeometryBuilder::build_as(
                 &shapes::SvgPathShape {
                     svg_path_string: BLACKSMITH_OUTLINE.to_owned(),
                     svg_doc_size_in_px: svg_doc_size.to_owned(),
@@ -45,7 +45,7 @@ fn setup_system(mut commands: Commands) {
                 DrawMode::Stroke(StrokeMode::new(Color::BLACK, 4.0)),
                 Transform::default(),
             ));
-            parent.spawn_bundle(GeometryBuilder::build_as(
+            parent.spawn(GeometryBuilder::build_as(
                 &shapes::SvgPathShape {
                     svg_path_string: BLACKSMITH_DETAIL.to_owned(),
                     svg_doc_size_in_px: svg_doc_size.to_owned(),
@@ -56,7 +56,7 @@ fn setup_system(mut commands: Commands) {
         });
 
     commands
-        .spawn()
+        .spawn_empty()
         .insert(Name("Shack".to_owned()))
         .insert(ToolShackMarker)
         .insert(SpatialBundle {
@@ -73,7 +73,7 @@ fn setup_system(mut commands: Commands) {
         //the art style was approximated from https://www.kenney.nl/assets/cartography-pack
         .with_children(|parent| {
             let svg_doc_size = Vec2::new(1000., 1000.);
-            parent.spawn_bundle(GeometryBuilder::build_as(
+            parent.spawn(GeometryBuilder::build_as(
                 &shapes::SvgPathShape {
                     svg_path_string: SHACK.to_owned(),
                     svg_doc_size_in_px: svg_doc_size.to_owned(),
@@ -83,7 +83,7 @@ fn setup_system(mut commands: Commands) {
             ));
 
             // shack walls
-            parent.spawn_bundle(GeometryBuilder::build_as(
+            parent.spawn(GeometryBuilder::build_as(
                 &shapes::SvgPathShape {
                     svg_path_string: SHACK_WALLS.to_owned(),
                     svg_doc_size_in_px: svg_doc_size.to_owned(),
